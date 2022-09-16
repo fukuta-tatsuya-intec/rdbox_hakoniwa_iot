@@ -74,8 +74,8 @@ helm uninstall -n vernemq vernemq
 ## TODO
 
 - [ ] MQTT
-  - [ ] ブローカーの動作確認
-  - [ ] ブローカーの可視化
+  - [x] ブローカーの動作確認
+  - [x] ブローカーの可視化
   - [ ] センサーデータ可視化
   - [ ] MQTT over TLS
   - [ ] ユーザ認証
