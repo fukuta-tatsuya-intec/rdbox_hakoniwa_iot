@@ -1,11 +1,12 @@
 import random
 import time
+import json
 
 from paho.mqtt import client as mqtt_client
 
-broker = 'vernemq.rdbox.192-168-10-155.nip.io'
+broker = 'vernemq.rdbox.192-168-10-150.nip.io'
 port = 32022
-topic = "python/mqtt"
+topic = "v1/devices/me/user001"
 # generate client ID with pub prefix randomly
 client_id = f'python-mqtt-{random.randint(0, 1000)}'
 # username = 'emqx'
@@ -28,8 +29,9 @@ def publish(client):
     msg_count = 0
     while True:
         time.sleep(1)
-        msg = f"messages: {msg_count}"
-        result = client.publish(topic, msg)
+        hertlate = random.uniform(70.0, 75.0)
+        msg = {"temperature": 36.5, "heartbeat": int(hertlate)}
+        result = client.publish(topic, json.dumps(msg))
         # result: [0, 1]
         status = result[0]
         if status == 0:

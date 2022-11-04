@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mqtt2prometheus
+  labels:
+    app.kubernetes.io/instance: mqtt2prometheus
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: mqtt2prometheus
+    helm.sh/chart: mqtt2prometheus
+    release: prometheus
+spec:
+  endpoints:
+  - interval: 10s
+    port: metrics
+    path: /metrics
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mqtt2prometheus
+      app.kubernetes.io/instance: mqtt2prometheus

@@ -63,11 +63,27 @@ dashboard.jsonを読み込ませる
 
 #### センサーデータ
 
-準備中
+上記のMQTTブローカのデータ＋実際のセンサー値（今回はバイタルデータ）を組み合わせたダッシュボードを表示．
+
+以下のコマンドの実行で，MQTTの特定のトピック（v1/devices/me/+）からのデータを，Prometheusに変換・保存する仕組みが動き出します．モジュールとして「[hikhvar/mqtt2prometheus: MQTT to Prometheus gateway](https://github.com/hikhvar/mqtt2prometheus)」を使用します．（configmap.yaml等のIPアドレスやポート番号を適宜変更すること．）
+
+```bash
+helm -n mqtt2prometheus upgrade --install  mqtt2prometheus ./helm/mqtt2prometheus --create-namespace
+```
+
+前述の「ブローカーステイタス」の章と同様の手順で，ダッシュボードを追加します．ここではファイル名`vital_signs.json`のダッシュボード定義を使います．
+
+![hoge](./docs/images/vital_signs_-_Dashboards_-_Grafana.jpg)
+
+左上部のセレクトボックスを切り替えることで異なるセンサーからの「バイタルデータ`Gauge`」を表示することも可能です．
 
 ### 片付け
 
 ```bash
+# まずは，Pub/Subを止める
+
+# その後に．．．
+helm uninstall -n mqtt2prometheus mqtt2prometheus
 helm uninstall -n vernemq vernemq
 ```
 
@@ -76,7 +92,7 @@ helm uninstall -n vernemq vernemq
 - [ ] MQTT
   - [x] ブローカーの動作確認
   - [x] ブローカーの可視化
-  - [ ] センサーデータ可視化
+  - [x] センサーデータ可視化
   - [ ] MQTT over TLS
   - [ ] ユーザ認証
 - [ ] パケットの制御

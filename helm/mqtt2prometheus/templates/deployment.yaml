@@ -1,0 +1,59 @@
+## deployment.yaml
+{{- if .Values.mqtt2prometheus.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "common.names.fullname" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+    app.kubernetes.io/component: mqtt2prometheus
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+spec:
+  replicas: {{ .Values.mqtt2prometheus.replicaCount }}
+  selector:
+    matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
+      app.kubernetes.io/component: mqtt2prometheus
+  template:
+    metadata:
+      labels: {{- include "common.labels.standard" . | nindent 8 }}
+        app.kubernetes.io/component: mqtt2prometheus
+        {{- if .Values.mqtt2prometheus.podLabels }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.mqtt2prometheus.podLabels "context" $) | nindent 8 }}
+        {{- end }}
+      annotations:
+        {{- if .Values.mqtt2prometheus.podAnnotations }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.mqtt2prometheus.podAnnotations "context" $) | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- include "mqtt2prometheus.imagePullSecrets" . | nindent 6 }}
+      containers:
+        - name: mqtt2prometheus
+          image: {{ include "mqtt2prometheus.image" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.mqtt2prometheus.command }}
+          command: {{- include "common.tplvalues.render" (dict "value" .Values.mqtt2prometheus.command "context" $) | nindent 12 }}
+          {{- end }}
+          {{- if .Values.mqtt2prometheus.args }}
+          args: {{- include "common.tplvalues.render" (dict "value" .Values.mqtt2prometheus.args "context" $) | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            {{- if .Values.config.useMqtt2prometheusConfFile }}
+            - name: mqtt-conf
+              mountPath: /usr/local/config.yaml
+              subPath: config.yaml
+            {{- end }}
+          ports:
+          - containerPort: 9641
+            name: metrics
+      volumes:
+        {{- if .Values.config.useMqtt2prometheusConfFile }}
+        - name: mqtt-conf
+          configMap:
+            name: {{ include "common.names.fullname" . }}
+        {{- end }}
+{{- end }}

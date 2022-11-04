@@ -1,0 +1,86 @@
+## @section Global parameters
+## Global Docker image parameters
+## Please, note that this will override the image parameters, including dependencies, configured to use the global value
+## Current available global Docker image parameters: imageRegistry, imagePullSecrets and storageClass
+
+## @param global.imageRegistry Global Docker image registry
+## @param global.imagePullSecrets Global Docker registry secret names as an array
+##
+global:
+  imageRegistry: ""
+  ## E.g.
+  ## imagePullSecrets:
+  ##   - myRegistryKeySecretName
+  ##
+  imagePullSecrets: []
+
+## @section Common parameters
+
+## @param commonLabels Labels to add to all deployed objects
+##
+commonLabels: {}
+## @param commonAnnotations Annotations to add to all deployed objects
+##
+commonAnnotations: {}
+
+## @section mqtt2prometheus parameters
+
+## RDBOX mqtt2prometheus image version
+## ref: https://hub.docker.com/r/rdbox/nfs-ganesha/tags/
+## @param image.registry mqtt2prometheus image registry
+## @param image.repository mqtt2prometheus image repository
+## @param image.tag mqtt2prometheus image tag (immutable tags are recommended)
+## @param image.digest mqtt2prometheus image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+## @param image.pullPolicy mqtt2prometheus image pull policy
+## @param image.pullSecrets mqtt2prometheus image pull secrets
+##
+image:
+  registry: ghcr.io
+  repository: hikhvar/mqtt2prometheus
+  tag: v0.1.6
+  digest: ""
+  ## Specify a imagePullPolicy
+  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+  ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  ##
+  pullPolicy: IfNotPresent
+  ## Optionally specify an array of imagePullSecrets.
+  ## Secrets must be manually created in the namespace.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  ##
+  ## pullSecrets:
+  ##   - myRegistryKeySecretName
+  pullSecrets: []
+
+## Parameters to override the default config.yaml file.
+## It is needed to create a configmap or a secret containing the config.yaml file.
+## @param config.useMqtt2prometheusConfFile Allows to load a `config.yaml` file
+##
+config:
+  useMqtt2prometheusConfFile: true
+
+## @section mqtt2prometheus Deployment parameters
+
+mqtt2prometheus:
+  ## @param mqtt2prometheus.enabled Enable persistence using mqtt2prometheus (for testing)
+  ##
+  enabled: true
+  ## @param mqtt2prometheus.replicaCount Number of mqtt2prometheus nodes
+  ##
+  replicaCount: 1
+  ## @param mqtt2prometheus.podLabels Extra labels for mqtt2prometheus pods
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  ##
+  podLabels: {}
+  ## @param mqtt2prometheus.podAnnotations mqtt2prometheus Pod annotations
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  ##
+  podAnnotations: {}
+  ## @param nfsGanesha.command Override default container command (useful when using custom images)
+  ##
+  command:
+  - /mqtt2prometheus
+  - -config
+  - /usr/local/config.yaml
+  - -log-level
+  - debug

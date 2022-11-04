@@ -3,7 +3,7 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: cluster-issuer-ca.vernemq.rdbox.192-168-10-155.nip.io
+  name: cluster-issuer-ca.vernemq.rdbox.192-168-10-150.nip.io
   namespace: vernemq
   labels:
     app.kubernetes.io/name: vernemq
@@ -15,17 +15,17 @@ metadata:
     rdbox.local/chart: 0.1.0
 spec:
   isCA: true
-  commonName: "vernemq.rdbox.192-168-10-155.nip.io"
+  commonName: "vernemq.rdbox.192-168-10-150.nip.io"
   dnsNames:
-    - vernemq.rdbox.192-168-10-155.nip.io
-    - "*.vernemq.rdbox.192-168-10-155.nip.io"
-  secretName: vernemq.rdbox.192-168-10-155.nip.io
+    - vernemq.rdbox.192-168-10-150.nip.io
+    - "*.vernemq.rdbox.192-168-10-150.nip.io"
+  secretName: vernemq.rdbox.192-168-10-150.nip.io
   duration: 8760h
   privateKey:
     algorithm: RSA
     size: 4096
   issuerRef:
-    name: cluster-issuer-ca.rdbox.192-168-10-155.nip.io
+    name: cluster-issuer-ca.rdbox.192-168-10-150.nip.io
     kind: ClusterIssuer
     group: cert-manager.io
 ---
@@ -34,7 +34,7 @@ spec:
 apiVersion: getambassador.io/v3alpha1
 kind: Host
 metadata:
-  name: vernemq.rdbox.192-168-10-155.nip.io
+  name: vernemq.rdbox.192-168-10-150.nip.io
   namespace: vernemq
   labels:
     app.kubernetes.io/name: vernemq
@@ -45,7 +45,7 @@ metadata:
     rdbox.local/format: v1beta1
     rdbox.local/chart: 0.1.0
 spec:
-  hostname: vernemq.rdbox.192-168-10-155.nip.io
+  hostname: vernemq.rdbox.192-168-10-150.nip.io
   requestPolicy:
     insecure:
       action: Route

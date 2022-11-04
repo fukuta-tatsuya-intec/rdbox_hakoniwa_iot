@@ -50,7 +50,7 @@ mqttc.on_publish = on_publish
 mqttc.on_subscribe = on_subscribe
 # Uncomment to enable debug messages
 # mqttc.on_log = on_log
-mqttc.connect("vernemq.rdbox.192-168-10-155.nip.io", 32022, 60)
-mqttc.subscribe("python/mqtt", 0)
+mqttc.connect("vernemq.rdbox.192-168-10-150.nip.io", 32022, 60)
+mqttc.subscribe("v1/devices/me/user001", 0)
 
 mqttc.loop_forever()
