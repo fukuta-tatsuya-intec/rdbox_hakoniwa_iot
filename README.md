@@ -35,7 +35,9 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip3 install paho-mqtt
 # connectの接続先ホスト・ポートは適宜変更すること
-python3 pub.py
+# 第一引数：接続先
+# 第二引数：クライアント番号(1を指定するとuser001に整形)
+python3 pub.py vernemq.rdbox.aio101.intec.lan 32022 1
 python3 sub.py
 ```
 

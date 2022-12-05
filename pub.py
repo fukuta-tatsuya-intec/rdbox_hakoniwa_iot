@@ -1,12 +1,13 @@
 import random
 import time
 import json
+import sys
 
 from paho.mqtt import client as mqtt_client
 
-broker = 'vernemq.rdbox.192-168-10-150.nip.io'
+broker = 'vernemq.rdbox.aio101.intec.lan'
 port = 32022
-topic = "v1/devices/me/user001"
+topic = "v1/devices/me/"
 # generate client ID with pub prefix randomly
 client_id = f'python-mqtt-{random.randint(0, 1000)}'
 # username = 'emqx'
@@ -48,4 +49,9 @@ def run():
 
 
 if __name__ == '__main__':
+    broker = sys.argv[1]
+    port = int(sys.argv[2])
+    seq_no = sys.argv[3]
+    user = "user{:0>3}".format(seq_no)
+    topic = topic + user
     run()

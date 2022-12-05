@@ -90,7 +90,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.1.0",
+      "pluginVersion": "9.1.7",
       "targets": [
         {
           "datasource": {
@@ -170,7 +170,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.1.0",
+      "pluginVersion": "9.1.7",
       "targets": [
         {
           "datasource": {
@@ -249,7 +249,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.1.0",
+      "pluginVersion": "9.1.7",
       "targets": [
         {
           "datasource": {
@@ -329,7 +329,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.1.0",
+      "pluginVersion": "9.1.7",
       "targets": [
         {
           "datasource": {
@@ -397,7 +397,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.1.0",
+      "pluginVersion": "9.1.7",
       "targets": [
         {
           "datasource": {
@@ -526,13 +526,9 @@
     "list": [
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "user001",
           "value": "user001"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "prometheus"
         },
         "definition": "label_values(sensor)",
         "description": "sensor",
@@ -547,7 +543,7 @@
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
-        "regex": "",
+        "regex": "/user.*/",
         "skipUrlSync": false,
         "sort": 1,
         "type": "query"
@@ -562,6 +558,6 @@
   "timezone": "",
   "title": "vital_signs",
   "uid": "y_qJiWvVz",
-  "version": 12,
+  "version": 2,
   "weekStart": ""
 }
