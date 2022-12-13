@@ -23,6 +23,7 @@ KinD版：[rdbox\-intec/rdbox at insiders](https://github.com/rdbox-intec/rdbox/
 helm repo add vernemq https://vernemq.github.io/docker-vernemq
 helm repo update
 helm -n vernemq upgrade --install vernemq vernemq/vernemq --create-namespace -f values.yaml
+# ingress接続先は適宜変更すること（例：vernemq.rdbox.172-16-0-110.nip.io）
 kubectl -n vernemq apply -f ingress.yaml
 ```
 
@@ -44,7 +45,7 @@ python3 sub.py
 ### Grafanaでの視覚化
 
 - RDBOXのCLI指示に合わせてWebブラウザでGrafanaページにアクセス
-  - [https://grafana.rdbox.192-168-10-155.nip.io/dashboards](https://grafana.rdbox.192-168-10-155.nip.io/dashboards)
+  - [https://grafana.rdbox.aio101.intec.lan/dashboards](https://grafana.rdbox.aio101.intec.lan/dashboards)
 
 
 #### ブローカーステイタス
